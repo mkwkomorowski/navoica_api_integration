@@ -1,0 +1,2 @@
+recursive-include navoica_api_integration/patches *
+recursive-include navoica_api_integration/templates *
