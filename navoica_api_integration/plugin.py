@@ -155,6 +155,93 @@ hooks.Filters.ENV_TEMPLATE_TARGETS.add_items(
     ],
 )
 
+hooks.Filters.ENV_PATCHES.add_items(
+    [
+        (
+            "openedx-cms-common-settings",
+            "INSTALLED_APPS.insert(0, 'modeltranslation')"
+        ),
+        (
+            "openedx-cms-common-settings",
+            "INSTALLED_APPS += ['navoica_api', 'navoica_api.course', 'lms.djangoapps.instructor_task']"
+        ),
+        (
+            "openedx-lms-common-settings",
+            "INSTALLED_APPS.insert(0, 'modeltranslation')"
+        ),
+        (
+            "openedx-lms-common-settings",
+            "INSTALLED_APPS += ['navoica_api', 'navoica_api.course']"
+        ),
+        (
+            "openedx-lms-common-settings",
+            "ROOT_URLCONF = 'navoica_api.lms.urls'"
+        ),
+        (
+        "openedx-lms-common-settings",
+        """
+NAVOICA_ADVANCED_SETTINGS_ADDITIONAL_FIELDS = {
+    'external_enroll':
+        {
+            'deprecated': False,
+            'display_name': "Enable external enroll",
+            'help': "",
+            'hide_on_enabled_publisher': False,
+            'value': False, #default value, you can override in additional_settings
+        },
+    'external_enroll_url':
+        {
+            'deprecated': False,
+            'display_name': "External enroll url",
+            'help': "Use format: https://enroll.navoica.pl/",
+            'hide_on_enabled_publisher': False,
+            'value': "", #default value, you can override in additional_settings
+        },
+    'append_eu_logos_certificate':
+        {
+            'deprecated': False,
+            'display_name': "Include the EU logo in the certificate template",
+            'help': "",
+            'hide_on_enabled_publisher': False,
+            'value': False, #default value, you can override in additional_settings
+        }
+}
+"""
+        ),
+        (
+        "openedx-cms-common-settings",
+        """
+NAVOICA_ADVANCED_SETTINGS_ADDITIONAL_FIELDS = {
+    'external_enroll':
+        {
+            'deprecated': False,
+            'display_name': "Enable external enroll",
+            'help': "",
+            'hide_on_enabled_publisher': False,
+            'value': False, #default value, you can override in additional_settings
+        },
+    'external_enroll_url':
+        {
+            'deprecated': False,
+            'display_name': "External enroll url",
+            'help': "Use format: https://enroll.navoica.pl/",
+            'hide_on_enabled_publisher': False,
+            'value': "", #default value, you can override in additional_settings
+        },
+    'append_eu_logos_certificate':
+        {
+            'deprecated': False,
+            'display_name': "Include the EU logo in the certificate template",
+            'help': "",
+            'hide_on_enabled_publisher': False,
+            'value': False, #default value, you can override in additional_settings
+        }
+}
+"""
+        ),
+    ]
+)
+
 
 ########################################
 # PATCH LOADING
@@ -172,92 +259,92 @@ for path in glob(
 ):
     with open(path, encoding="utf-8") as patch_file:
         hooks.Filters.ENV_PATCHES.add_item((os.path.basename(path), patch_file.read()))
-        hooks.Filters.ENV_PATCHES.add_items(
-            [
-                (
-                    "openedx-cms-common-settings",
-                    "INSTALLED_APPS.insert(0, 'modeltranslation')"
-                ),
-                (
-                    "openedx-cms-common-settings",
-                    "INSTALLED_APPS += ['navoica_api', 'navoica_api.course', 'lms.djangoapps.instructor_task']"
-                ),
-                (
-                    "openedx-lms-common-settings",
-                    "INSTALLED_APPS.insert(0, 'modeltranslation')"
-                ),
-                (
-                    "openedx-lms-common-settings",
-                    "INSTALLED_APPS += ['navoica_api', 'navoica_api.course']"
-                ),
-                (
-                    "openedx-lms-common-settings",
-                    "ROOT_URLCONF = 'navoica_api.lms.urls'"
-                ),
-                (
-                "openedx-lms-common-settings",
-                """
-NAVOICA_ADVANCED_SETTINGS_ADDITIONAL_FIELDS = {
-    'external_enroll':
-        {
-            'deprecated': False,
-            'display_name': "Enable external enroll",
-            'help': "",
-            'hide_on_enabled_publisher': False,
-            'value': False, #default value, you can override in additional_settings
-        },
-    'external_enroll_url':
-        {
-            'deprecated': False,
-            'display_name': "External enroll url",
-            'help': "Use format: https://enroll.navoica.pl/",
-            'hide_on_enabled_publisher': False,
-            'value': "", #default value, you can override in additional_settings
-        },
-    'append_eu_logos_certificate':
-        {
-            'deprecated': False,
-            'display_name': "Include the EU logo in the certificate template",
-            'help': "",
-            'hide_on_enabled_publisher': False,
-            'value': False, #default value, you can override in additional_settings
-        }
-}
-"""
-                ),
-                (
-                "openedx-cms-common-settings",
-                """
-NAVOICA_ADVANCED_SETTINGS_ADDITIONAL_FIELDS = {
-    'external_enroll':
-        {
-            'deprecated': False,
-            'display_name': "Enable external enroll",
-            'help': "",
-            'hide_on_enabled_publisher': False,
-            'value': False, #default value, you can override in additional_settings
-        },
-    'external_enroll_url':
-        {
-            'deprecated': False,
-            'display_name': "External enroll url",
-            'help': "Use format: https://enroll.navoica.pl/",
-            'hide_on_enabled_publisher': False,
-            'value': "", #default value, you can override in additional_settings
-        },
-    'append_eu_logos_certificate':
-        {
-            'deprecated': False,
-            'display_name': "Include the EU logo in the certificate template",
-            'help': "",
-            'hide_on_enabled_publisher': False,
-            'value': False, #default value, you can override in additional_settings
-        }
-}
-"""
-                ),
-            ]
-        )
+#         hooks.Filters.ENV_PATCHES.add_items(
+#             [
+#                 (
+#                     "openedx-cms-common-settings",
+#                     "INSTALLED_APPS.insert(0, 'modeltranslation')"
+#                 ),
+#                 (
+#                     "openedx-cms-common-settings",
+#                     "INSTALLED_APPS += ['navoica_api', 'navoica_api.course', 'lms.djangoapps.instructor_task']"
+#                 ),
+#                 (
+#                     "openedx-lms-common-settings",
+#                     "INSTALLED_APPS.insert(0, 'modeltranslation')"
+#                 ),
+#                 (
+#                     "openedx-lms-common-settings",
+#                     "INSTALLED_APPS += ['navoica_api', 'navoica_api.course']"
+#                 ),
+#                 (
+#                     "openedx-lms-common-settings",
+#                     "ROOT_URLCONF = 'navoica_api.lms.urls'"
+#                 ),
+#                 (
+#                 "openedx-lms-common-settings",
+#                 """
+# NAVOICA_ADVANCED_SETTINGS_ADDITIONAL_FIELDS = {
+#     'external_enroll':
+#         {
+#             'deprecated': False,
+#             'display_name': "Enable external enroll",
+#             'help': "",
+#             'hide_on_enabled_publisher': False,
+#             'value': False, #default value, you can override in additional_settings
+#         },
+#     'external_enroll_url':
+#         {
+#             'deprecated': False,
+#             'display_name': "External enroll url",
+#             'help': "Use format: https://enroll.navoica.pl/",
+#             'hide_on_enabled_publisher': False,
+#             'value': "", #default value, you can override in additional_settings
+#         },
+#     'append_eu_logos_certificate':
+#         {
+#             'deprecated': False,
+#             'display_name': "Include the EU logo in the certificate template",
+#             'help': "",
+#             'hide_on_enabled_publisher': False,
+#             'value': False, #default value, you can override in additional_settings
+#         }
+# }
+# """
+#                 ),
+#                 (
+#                 "openedx-cms-common-settings",
+#                 """
+# NAVOICA_ADVANCED_SETTINGS_ADDITIONAL_FIELDS = {
+#     'external_enroll':
+#         {
+#             'deprecated': False,
+#             'display_name': "Enable external enroll",
+#             'help': "",
+#             'hide_on_enabled_publisher': False,
+#             'value': False, #default value, you can override in additional_settings
+#         },
+#     'external_enroll_url':
+#         {
+#             'deprecated': False,
+#             'display_name': "External enroll url",
+#             'help': "Use format: https://enroll.navoica.pl/",
+#             'hide_on_enabled_publisher': False,
+#             'value': "", #default value, you can override in additional_settings
+#         },
+#     'append_eu_logos_certificate':
+#         {
+#             'deprecated': False,
+#             'display_name': "Include the EU logo in the certificate template",
+#             'help': "",
+#             'hide_on_enabled_publisher': False,
+#             'value': False, #default value, you can override in additional_settings
+#         }
+# }
+# """
+#                 ),
+#             ]
+#         )
 
 
 ########################################
